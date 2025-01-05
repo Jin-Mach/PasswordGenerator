@@ -17,3 +17,17 @@ class DialogManager:
         messagebox.setText("You must check one or more options in settings!\n"
                            "Like: uppercase, lowercase, numbers or symbols")
         messagebox.exec()
+
+    @staticmethod
+    def show_non_password_error(parent=None) -> None:
+        message = QMessageBox(parent)
+        message.setWindowTitle("Non password error")
+        message.setText("Cannot copy: Password is not generated yet.")
+        message.exec()
+
+    @staticmethod
+    def show_password_copied_message(parent=None) -> None:
+        message = QMessageBox(parent)
+        message.setWindowTitle("Password copied")
+        message.setText("Password successfully copied to clipboard.")
+        message.exec()

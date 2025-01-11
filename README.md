@@ -43,11 +43,18 @@ Allows users to generate strong, random passwords with various options for lengt
 ## Usage
 To run the application, execute the following command:
     ```
-    python pasword_generator.py
+    python password_generator.py
     ```
 
 ## License
 This project is licensed under the MIT License.
+
+## Credits
+Icons used in this project are sourced from Icons8.
+
+- Application icon
+
+For more icons, visit: (https://icons8.com/).
 
 ## Contact
 For any questions or feedback, feel free to reach out to me on my GitHub profile: [GitHub](https://github.com/Jin-Mach).

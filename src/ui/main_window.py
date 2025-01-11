@@ -1,7 +1,7 @@
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QFont
 from PyQt6.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, QGroupBox, QSlider, \
-    QGridLayout, QCheckBox, QApplication, QLineEdit
+    QGridLayout, QCheckBox, QApplication, QLineEdit, QTabWidget
 
 from src.ui.dialog.dialog_manager import DialogManager
 from src.utilities.exception_manager import ExceptionManager
@@ -13,7 +13,7 @@ class MainWindow(QMainWindow):
     def __init__(self) -> None:
         super().__init__()
         self.setWindowTitle("Password generator")
-        self.setFixedSize(450, 300)
+        self.setFixedSize(450, 400)
         self.create_gui()
         self.center_application()
 
@@ -49,10 +49,10 @@ class MainWindow(QMainWindow):
         return password_widget
 
     def create_settings_widget(self) -> QGroupBox:
-        settings_groupbox = QGroupBox("settings")
+        settings_groupbox = QGroupBox("password settings")
         setting_layout = QVBoxLayout()
         lenght_text_layout = QHBoxLayout()
-        lenght_text = QLabel(" password length")
+        lenght_text = QLabel("password length")
         lenght_text.setAlignment(Qt.AlignmentFlag.AlignLeft)
         self.password_length = QLabel("10")
         self.password_length.setAlignment(Qt.AlignmentFlag.AlignRight)
@@ -61,12 +61,27 @@ class MainWindow(QMainWindow):
         self.password_slider.setValue(10)
         self.password_slider.setOrientation(Qt.Orientation.Horizontal)
         self.password_slider.valueChanged.connect(self.set_password_length)
+        self.tab_widget = QTabWidget()
+        check_box_widget = QWidget()
         check_box_layout = QGridLayout()
         self.uppercase_checkbox = QCheckBox("Uppercase letters (A-Z)")
         self.uppercase_checkbox.setChecked(True)
         self.lowercase_checkbox = QCheckBox("Lowercase letters (a-z)")
         self.numbers_checkbox = QCheckBox("Numbers (0-9)")
         self.symbols_checkbox = QCheckBox("Symbols (!, @, #, etc.)")
+        check_box_widget.setLayout(check_box_layout)
+        user_settings = QWidget()
+        user_settings_layout = QVBoxLayout()
+        user_text_label = QLabel("Enter your own characters (at least 5)")
+        user_text_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.user_input = QLineEdit()
+        self.user_input.setFont(QFont("Arial", 13))
+        user_settings_layout.addWidget(user_text_label)
+        user_settings_layout.addWidget(self.user_input)
+        user_settings.setLayout(user_settings_layout)
+        self.tab_widget.addTab(check_box_widget, "default settings")
+        self.tab_widget.addTab(user_settings, "user settings")
+        self.tab_widget.currentChanged.connect(lambda: self.set_focus(self.tab_widget.currentIndex()))
         check_box_layout.addWidget(self.uppercase_checkbox, 0, 0)
         check_box_layout.addWidget(self.lowercase_checkbox, 1, 0)
         check_box_layout.addWidget(self.numbers_checkbox, 0, 1)
@@ -75,7 +90,7 @@ class MainWindow(QMainWindow):
         lenght_text_layout.addWidget(self.password_length)
         setting_layout.addLayout(lenght_text_layout)
         setting_layout.addWidget(self.password_slider)
-        setting_layout.addLayout(check_box_layout)
+        setting_layout.addWidget(self.tab_widget)
         settings_groupbox.setLayout(setting_layout)
         return settings_groupbox
 
@@ -103,8 +118,8 @@ class MainWindow(QMainWindow):
 
     def get_password(self) -> None:
         try:
-            password = password_generator(self.password_slider, self.uppercase_checkbox, self.lowercase_checkbox,
-                                          self.numbers_checkbox, self.symbols_checkbox)
+            password = password_generator(self.tab_widget.currentIndex(), self.password_slider, self.uppercase_checkbox, self.lowercase_checkbox,
+                                          self.numbers_checkbox, self.symbols_checkbox, self.user_input)
             self.password_lineedit.setText(password)
         except Exception as e:
             ExceptionManager.exception_handler(e, self)
@@ -119,3 +134,7 @@ class MainWindow(QMainWindow):
                 clipboard.setText(self.password_lineedit.text().strip())
         except Exception as e:
             ExceptionManager.exception_handler(e, self)
+
+    def set_focus(self, index: int) -> None:
+        if index == 1:
+            self.user_input.setFocus()

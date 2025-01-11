@@ -11,11 +11,10 @@ class DialogManager:
         messagebox.exec()
 
     @staticmethod
-    def show_password_error(parent=None) -> None:
+    def show_password_error(text: str, parent=None) -> None:
         messagebox = QMessageBox(parent)
         messagebox.setWindowTitle("Password error")
-        messagebox.setText("You must check one or more options in settings!\n"
-                           "Like: uppercase, lowercase, numbers or symbols")
+        messagebox.setText(text)
         messagebox.exec()
 
     @staticmethod

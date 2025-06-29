@@ -14,7 +14,9 @@ from src.utilities.generate_password import password_generator
 class MainWindow(QMainWindow):
     def __init__(self) -> None:
         super().__init__()
-        self.setWindowIcon(QIcon(str(pathlib.Path(__file__).parent.parent.joinpath("data", "icons", "app_icon.png"))))
+        icon_path = pathlib.Path(__file__).parent.parent.joinpath("data", "icons", "app_icon.png")
+        if icon_path.exists():
+            self.setWindowIcon(QIcon(str(icon_path)))
         self.setWindowTitle("Password generator")
         self.setFixedSize(450, 400)
         self.create_gui()

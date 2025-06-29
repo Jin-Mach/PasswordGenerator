@@ -3,6 +3,7 @@ import logging
 from logging.handlers import RotatingFileHandler
 
 logging_file = pathlib.Path.joinpath(pathlib.Path(__file__).parent.parent, "data", "password_generator_logs.log")
+logging_file.parent.mkdir(parents=True, exist_ok=True)
 
 def get_logger() -> logging.Logger:
     formatter = logging.Formatter(

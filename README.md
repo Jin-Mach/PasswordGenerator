@@ -53,11 +53,11 @@ Allows users to generate strong, random passwords with various options for lengt
 - Run the application:
   - On Windows
   ```bash
-  python text_editor.py
+  python password_generator.py
   ```
   - On macOS/Linux
   ```bash
-  python3 text_editor.py
+  python3 password_generator.py
   ```
 
 ## License

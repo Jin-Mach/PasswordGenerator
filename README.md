@@ -16,12 +16,16 @@ Allows users to generate strong, random passwords with various options for lengt
     ```
 
 3. Create a virtual environment:
-    ```
-    python -m venv .venv
-    ```
+  - On Windows
+  ```bash
+  python -m venv .venv
+  ```
+  - On macOS/Linux
+  ```bash
+  python3 -m venv .venv
+  ```
 
 4. Activate the virtual environment:
-
    - On Windows (Command Prompt):
      ```
      .venv\Scripts\activate
@@ -36,15 +40,25 @@ Allows users to generate strong, random passwords with various options for lengt
      ```
 
 5. Install the required packages:
-    ```
-    pip install -r requirements.txt
-    ```
+   - On Windows
+   ```bash
+   python -m pip install -r requirements.txt
+   ```
+   - On macOS/Linux
+   ```bash
+   python3 -m pip install -r requirements.txt
+   ```
 
 ## Usage
-To run the application, execute the following command:
-    ```
-    python password_generator.py
-    ```
+- Run the application:
+  - On Windows
+  ```bash
+  python text_editor.py
+  ```
+  - On macOS/Linux
+  ```bash
+  python3 text_editor.py
+  ```
 
 ## License
 This project is licensed under the MIT License.
